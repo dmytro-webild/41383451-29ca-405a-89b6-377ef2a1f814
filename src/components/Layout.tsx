@@ -11,7 +11,7 @@ export default function Layout() {
 
   useEffect(() => {
     const handleGlobalClick = (e: MouseEvent) => {
-      const privacyTarget = (e.target as HTMLElement)?.closest('a[href="#datenschutz"], a[href="#privacy"], a[href*="datenschutz"]');
+      const privacyTarget = (e.target as HTMLElement)?.closest('a[href="#datenschutz"], a[href="#privacy"]');
       if (privacyTarget) {
         e.preventDefault();
         setIsPrivacyOpen(true);
@@ -93,7 +93,7 @@ export default function Layout() {
             },
             {
               text: "Datenschutz",
-              href: "#datenschutz"
+              href: "/datenschutz"
             }
           ]}
           tagline="High-End Digitalagentur in Regensburg für Webdesign, SEO & KI-Automatisierung."

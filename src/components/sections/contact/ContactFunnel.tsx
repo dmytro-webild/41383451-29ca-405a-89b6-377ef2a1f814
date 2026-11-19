@@ -1,4 +1,4 @@
-import { useState, useId } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Check, ArrowLeft, ArrowRight, Sparkles, ShieldCheck, RefreshCw, Loader2, AlertCircle } from "lucide-react";
 import { clsx, type ClassValue } from "clsx";
@@ -75,7 +75,6 @@ const BUDGET_OPTIONS: OptionItem[] = [
 
 export default function ContactFunnel({ className }: { className?: string }) {
   const reduce = !!useReducedMotion();
-  const consentCheckboxId = useId();
   const endpoint =
     (import.meta.env.NEXT_PUBLIC_CONTACT_ENDPOINT as string | undefined)?.trim() ||
     (import.meta.env.VITE_CONTACT_ENDPOINT as string | undefined)?.trim() ||
@@ -189,10 +188,6 @@ export default function ContactFunnel({ className }: { className?: string }) {
     }
     if (!contactData.email.trim() || !contactData.email.includes("@")) {
       setValidationError("Bitte gib eine gültige E-Mail-Adresse ein.");
-      return;
-    }
-    if (!contactData.consent) {
-      setValidationError("Bitte stimme der Datenschutzerklärung zu.");
       return;
     }
 
@@ -731,27 +726,18 @@ export default function ContactFunnel({ className }: { className?: string }) {
                         </label>
                       </div>
 
-                      {/* Privacy consent checkbox */}
+                      {/* Subtle Datenschutzhinweis */}
                       <div className="pt-2">
-                        <label htmlFor={consentCheckboxId} className="flex items-start gap-3 cursor-pointer group">
-                          <input
-                            id={consentCheckboxId}
-                            type="checkbox"
-                            checked={contactData.consent}
-                            onChange={(e) => setContactData({ ...contactData, consent: e.target.checked })}
-                            className="mt-1 size-4 accent-accent cursor-pointer"
-                          />
-                          <span className="text-[length:var(--text-small)] text-muted-foreground leading-snug">
-                            Ich stimme der Verarbeitung meiner Daten gemäß der{" "}
-                            <a
-                              href="#datenschutz"
-                              className="text-accent underline underline-offset-2 hover:text-foreground font-medium"
-                            >
-                              Datenschutzerklärung
-                            </a>{" "}
-                            zu.
-                          </span>
-                        </label>
+                        <p className="text-[length:var(--text-small)] text-muted-foreground leading-snug">
+                          Mit dem Absenden erklärst du dich mit der Verarbeitung deiner Angaben gemäß unserer{" "}
+                          <a
+                            href="/datenschutz"
+                            className="text-accent underline underline-offset-2 hover:text-foreground font-medium transition-colors"
+                          >
+                            Datenschutzerklärung
+                          </a>{" "}
+                          einverstanden.
+                        </p>
                       </div>
                     </motion.div>
                   )}

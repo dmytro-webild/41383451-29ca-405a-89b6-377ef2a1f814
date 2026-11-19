@@ -210,14 +210,28 @@ export default function ContactFunnel({ className }: { className?: string }) {
 
         {/* Section Title */}
         <div className="flex flex-col gap-2">
-          <span className="font-mono text-[length:var(--text-label)] uppercase tracking-[var(--label-tracking)] text-accent">
-            Projektanfrage
-          </span>
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <span className="font-mono text-[length:var(--text-label)] uppercase tracking-[var(--label-tracking)] text-accent">
+              Projektanfrage
+            </span>
+            <a
+              href="mailto:kontakt@auftrivio.de"
+              className="font-mono text-[length:var(--text-small)] text-accent underline underline-offset-4 hover:text-foreground transition-colors font-medium"
+            >
+              kontakt@auftrivio.de
+            </a>
+          </div>
           <h2 className="text-[length:var(--text-h2)] font-heading">
             Starte dein digitales Projekt
           </h2>
           <p className="text-[length:var(--text-body-lg)] text-muted-foreground max-w-2xl">
-            In 5 kurzen Schritten zur maßgeschneiderten Analyse für dein Vorhaben in Regensburg.
+            In 5 kurzen Schritten zur maßgeschneiderten Analyse für dein Vorhaben in Regensburg. Oder schreib uns direkt per E-Mail an{" "}
+            <a
+              href="mailto:kontakt@auftrivio.de"
+              className="text-accent underline underline-offset-4 hover:text-foreground transition-colors font-medium"
+            >
+              kontakt@auftrivio.de
+            </a>.
           </p>
         </div>
 
@@ -584,10 +598,8 @@ export default function ContactFunnel({ className }: { className?: string }) {
                           <span className="text-[length:var(--text-small)] text-muted-foreground leading-snug">
                             Ich stimme der Verarbeitung meiner Daten gemäß der{" "}
                             <a
-                              href="https://auftrivio.de/datenschutz"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-accent underline underline-offset-2 hover:text-foreground"
+                              href="#datenschutz"
+                              className="text-accent underline underline-offset-2 hover:text-foreground font-medium"
                             >
                               Datenschutzerklärung
                             </a>{" "}

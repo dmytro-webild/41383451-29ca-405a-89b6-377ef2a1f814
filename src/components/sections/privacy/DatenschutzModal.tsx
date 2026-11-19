@@ -75,7 +75,7 @@ export default function DatenschutzModal({ isOpen, onClose }: DatenschutzModalPr
                   <strong className="text-foreground">AUFTRIVIO</strong><br />
                   Florin Alexandru Ungureanu, Geschäftsführer<br />
                   Regensburg, Deutschland<br />
-                  E-Mail: hallo@auftrivio.de
+                  E-Mail: <a href="mailto:kontakt@auftrivio.de" className="text-accent underline hover:text-foreground">kontakt@auftrivio.de</a>
                 </p>
               </section>
 
@@ -97,7 +97,7 @@ export default function DatenschutzModal({ isOpen, onClose }: DatenschutzModalPr
               <section>
                 <h3 className="text-[length:var(--text-body-lg)] font-semibold text-foreground mb-2">4. Deine Rechte</h3>
                 <p>
-                  Du hast jederzeit das Recht auf Auskunft, Berichtigung, Löschung oder Einschränkung der Verarbeitung deiner gespeicherten personenbezogenen Daten. Wende dich hierfür einfach an hallo@auftrivio.de.
+                  Du hast jederzeit das Recht auf Auskunft, Berichtigung, Löschung oder Einschränkung der Verarbeitung deiner gespeicherten personenbezogenen Daten. Wende dich hierfür einfach an <a href="mailto:kontakt@auftrivio.de" className="text-accent underline hover:text-foreground">kontakt@auftrivio.de</a>.
                 </p>
               </section>
             </div>

@@ -28,7 +28,7 @@ const NavbarMenuPill = ({
     { name: "Pricing", href: "#pricing" },
     { name: "Contact", href: "#contact" },
   ],
-  contact = { text: "hello@ostra.studio", href: "mailto:hello@ostra.studio" },
+  contact = { text: "kontakt@auftrivio.de", href: "mailto:kontakt@auftrivio.de" },
   menuText = "Menu",
   closeText = "Close",
 }: NavbarMenuPillProps) => {

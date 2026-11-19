@@ -159,7 +159,7 @@ export default function HomePage() {
           tag="05 / Über AUFTRIVIO"
           title="Über AUFTRIVIO"
           name="Florin Alexandru Ungureanu"
-          role="Geschäftsführer von AUFTRIVIO"
+          role="Geschäftsführer"
           description="High-End Webdesign, SEO & KI-Automatisierung aus Regensburg. Wir verbinden Ästhetik mit technischer Präzision für messbares digitales Wachstum."
         />
       </div>

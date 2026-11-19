@@ -30,7 +30,7 @@ export default function ImpressumPage() {
               Impressum
             </h1>
             <p className="text-[length:var(--text-body-lg)] text-muted-foreground font-body max-w-2xl mt-2">
-              Rechtliche Anbieterkennzeichnung gemäß § 5 TMG und § 18 MStV.
+              Rechtliche Anbieterkennzeichnung gemäß § 5 DDG und § 18 MStV.
             </p>
           </div>
         </div>
@@ -38,12 +38,12 @@ export default function ImpressumPage() {
         {/* Main Content Glass Card */}
         <div className="kit-glass border border-border bg-card/70 p-6 sm:p-10 shadow-2xl space-y-10 text-foreground">
           
-          {/* Angaben gem. TMG */}
+          {/* Angaben gem. DDG */}
           <section className="space-y-4">
             <div className="flex items-center gap-2 border-b border-border pb-3">
               <Building2 className="size-5 text-accent" />
               <h2 className="text-[length:var(--text-h3)] font-heading font-semibold">
-                Angaben gemäß § 5 TMG
+                Angaben gemäß § 5 DDG
               </h2>
             </div>
             <div className="space-y-2 text-[length:var(--text-body)] text-muted-foreground font-body leading-relaxed">
@@ -139,26 +139,6 @@ export default function ImpressumPage() {
             <p className="text-[length:var(--text-body)] text-muted-foreground font-body leading-relaxed">
               Florin Alexandru Ungureanu<br />
               Von-Reiner-Str. 26a, 93053 Regensburg, Deutschland
-            </p>
-          </section>
-
-          {/* Verbraucherstreitbeilegung */}
-          <section className="space-y-4 border-t border-border/60 pt-6">
-            <h2 className="text-[length:var(--text-body-lg)] font-heading font-semibold text-foreground">
-              Verbraucherstreitbeilegung / Universalschlichtungsstelle
-            </h2>
-            <p className="text-[length:var(--text-small)] text-muted-foreground font-body leading-relaxed">
-              Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:{" "}
-              <a
-                href="https://ec.europa.eu/consumers/odr/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-accent underline underline-offset-2 hover:text-foreground transition-colors"
-              >
-                https://ec.europa.eu/consumers/odr/
-              </a>
-              .<br />
-              Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
             </p>
           </section>
         </div>

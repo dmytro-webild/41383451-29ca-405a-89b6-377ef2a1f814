@@ -62,7 +62,7 @@ export default function ImpressumModal({ isOpen, onClose }: ImpressumModalProps)
 
             <div className="space-y-6 text-muted-foreground text-[length:var(--text-body)] leading-relaxed font-body">
               <section>
-                <h3 className="text-[length:var(--text-body-lg)] font-semibold text-foreground mb-2">Angaben gemäß § 5 TMG</h3>
+                <h3 className="text-[length:var(--text-body-lg)] font-semibold text-foreground mb-2">Angaben gemäß § 5 DDG</h3>
                 <p>
                   <strong className="text-foreground">AUFTRIVIO – Digital Growth &amp; Technology Agency</strong><br />
                   Einzelunternehmen<br />
@@ -96,13 +96,6 @@ export default function ImpressumModal({ isOpen, onClose }: ImpressumModalProps)
                 <p>
                   Florin Alexandru Ungureanu<br />
                   Von-Reiner-Str. 26a, 93053 Regensburg, Deutschland
-                </p>
-              </section>
-
-              <section>
-                <h3 className="text-[length:var(--text-body-lg)] font-semibold text-foreground mb-2">Verbraucherstreitbeilegung / Universalschlichtungsstelle</h3>
-                <p>
-                  Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
                 </p>
               </section>
             </div>

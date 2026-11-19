@@ -2,9 +2,10 @@ import HeroShapeSplit from "@/components/sections/hero/HeroShapeSplit";
 import ServicesGhostList from "@/components/sections/features/ServicesGhostList";
 import ProcessBentoPanels from "@/components/sections/features/ProcessBentoPanels";
 import GalleryWordPanels from "@/components/sections/gallery/GalleryWordPanels";
+import AboutSection from "@/components/sections/about/AboutSection";
 import TestimonialPortraitQuote from "@/components/sections/testimonial/TestimonialPortraitQuote";
 import FaqHairlineIndex from "@/components/sections/faq/FaqHairlineIndex";
-import ContactUnderlineForm from "@/components/sections/contact/ContactUnderlineForm";
+import ContactFunnel from "@/components/sections/contact/ContactFunnel";
 import ModelStage from "@/components/kit/ModelStage";
 import LoaderWordmarkHandoff from "@/components/loaders/LoaderWordmarkHandoff";
 
@@ -153,39 +154,27 @@ export default function HomePage() {
         />
       </div>
 
+      <div id="about" data-webild-section="AboutSection" data-webild-section-id="AboutSection-1" data-section="about" className="relative z-[45]">
+        <AboutSection
+          tag="05 / Über AUFTRIVIO"
+          title="Über AUFTRIVIO"
+          name="Florin Alexandru Ungureanu"
+          role="Geschäftsführer von AUFTRIVIO"
+          description="High-End Webdesign, SEO & KI-Automatisierung aus Regensburg. Wir verbinden Ästhetik mit technischer Präzision für messbares digitales Wachstum."
+        />
+      </div>
+
       <div id="testimonial" data-webild-section="TestimonialPortraitQuote" data-webild-section-id="TestimonialPortraitQuote-1" data-section="testimonial" className="relative z-[45]">
         <TestimonialPortraitQuote
-          label="Kundenstimmen"
-          title="Was unsere Kunden sagen"
-          items={[
-            {
-              quote: "Die Zusammenarbeit war professionell und die Ergebnisse übertreffen unsere Erwartungen.",
-              name: "Lukas Richter",
-              role: "Geschäftsführer",
-              imageSrc: "https://img.b2bpic.net/free-photo/young-hispanic-businessman-smiling-happy-touching-his-glasses-city_839833-13933.jpg",
-              imageAlt: "Young hispanic businessman smiling happy touching his glasses at the city."
-            },
-            {
-              quote: "Endlich ein Partner, der versteht, worauf es digital wirklich ankommt.",
-              name: "Laura Koch",
-              role: "Marketingleitung",
-              imageSrc: "https://img.b2bpic.net/free-photo/isolated-shot-joyful-brenette-young-cute-woman-laughs-joyfully-as-hears-funny-anecdote-from-friend_496169-2540.jpg",
-              imageAlt: "Isolated shot of joyful brenette young cute woman laughs joyfully as hears funny anecdote from friend"
-            },
-            {
-              quote: "Absolute Empfehlung für alle, die in Regensburg wachsen wollen.",
-              name: "Moritz Weber",
-              role: "Inhaber",
-              imageSrc: "https://img.b2bpic.net/free-photo/guy-is-sitting-cafe_1157-17020.jpg",
-              imageAlt: "The guy is sitting at the cafe"
-            }
-          ]}
+          label="06 / Kundenstimmen"
+          title="Kundenstimmen & Referenzen"
+          description="Erfahrungsberichte und Kundenstimmen unserer Partner werden nach persönlicher Freigabe veröffentlicht."
         />
       </div>
 
       <div id="faq" data-webild-section="FaqHairlineIndex" data-webild-section-id="FaqHairlineIndex-1" data-section="faq" className="relative z-[45]">
         <FaqHairlineIndex
-          tag="06 / ANTWORTEN"
+          tag="07 / ANTWORTEN"
           title="Fragen zum Ablauf"
           items={[
             {
@@ -212,44 +201,8 @@ export default function HomePage() {
         />
       </div>
 
-      <div id="contact" data-webild-section="ContactUnderlineForm" data-webild-section-id="ContactUnderlineForm-1" data-section="contact" className="relative z-[45]">
-        <ContactUnderlineForm
-          title="Kostenlose Analyse anfragen"
-          fields={[
-            {
-              name: "name",
-              label: "Dein Name",
-              placeholder: "Max Mustermann",
-              required: true
-            },
-            {
-              name: "email",
-              label: "E-Mail-Adresse",
-              type: "email",
-              placeholder: "hallo@auftrivio.de",
-              required: true
-            },
-            {
-              name: "message",
-              label: "Projekt-Details",
-              type: "textarea",
-              placeholder: "Beschreibe dein Vorhaben in wenigen Sätzen.",
-              required: true
-            }
-          ]}
-          servicesLabel="Service wählen"
-          services={[
-            "Webdesign",
-            "SEO Optimierung",
-            "KI Integration",
-            "CRM Systeme",
-            "Online-Marketing",
-            "Digitale Funnels"
-          ]}
-          button={{
-            text: "Analyse anfragen"
-          }}
-        />
+      <div id="contact" data-webild-section="ContactFunnel" data-webild-section-id="ContactFunnel-1" data-section="contact" className="relative z-[45]">
+        <ContactFunnel />
       </div>
     </>
   );

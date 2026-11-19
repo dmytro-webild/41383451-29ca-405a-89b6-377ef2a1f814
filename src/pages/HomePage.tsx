@@ -38,10 +38,10 @@ export default function HomePage() {
       <div id="hero" data-webild-section="HeroShapeSplit" data-webild-section-id="HeroShapeSplit-1" data-section="hero" className="relative z-[45]">
         <HeroShapeSplit
           tag="01 / Digital"
-          title="Dein Unternehmen verdient mehr als eine Webseite."
+          title="Dein Unternehmen verdient mehr als nur eine Webseite."
           description="Wir entwickeln High-End Websites, SEO und KI-Workflows in Regensburg für dein Wachstum."
           primaryButton={{
-            text: "Analyse starten",
+            text: "Digitales Projekt starten",
             href: "#contact"
           }}
           secondaryButton={{

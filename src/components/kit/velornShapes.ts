@@ -5,8 +5,8 @@ export type ShapeTone = { accent: string; face: string; light: boolean };
 type Mats = { face: THREE.MeshPhysicalMaterial; chrome: THREE.MeshPhysicalMaterial; accent: THREE.MeshPhysicalMaterial; side: THREE.MeshPhysicalMaterial };
 export type ShapeDef = { id: string; label: string; industries: string[]; build: () => THREE.Group };
 
-const RED = "rgb(252, 32, 31)";
-const FACE = "rgb(42, 9, 9)";
+const GOLD = "#d4af37";
+const FACE = "rgb(28, 22, 10)";
 
 const physical = (tone: string, params: THREE.MeshPhysicalMaterialParameters) => {
   const material = new THREE.MeshPhysicalMaterial(params);
@@ -19,9 +19,9 @@ type Finish = Record<keyof Mats, THREE.MeshPhysicalMaterialParameters>;
 
 const DARK: Finish = {
   face: { color: FACE, metalness: 1, roughness: 0.3, clearcoat: 1, clearcoatRoughness: 0.14 },
-  chrome: { color: "rgb(180, 180, 186)", metalness: 1, roughness: 0.2, clearcoat: 0.6, clearcoatRoughness: 0.1 },
-  accent: { color: RED, metalness: 0.45, roughness: 0.24, clearcoat: 1, clearcoatRoughness: 0.08 },
-  side: { color: "rgb(20, 20, 22)", metalness: 1, roughness: 0.34, clearcoat: 0.5, clearcoatRoughness: 0.2 },
+  chrome: { color: "rgb(212, 175, 55)", metalness: 1, roughness: 0.2, clearcoat: 0.6, clearcoatRoughness: 0.1 },
+  accent: { color: GOLD, metalness: 0.8, roughness: 0.2, clearcoat: 1, clearcoatRoughness: 0.08 },
+  side: { color: "rgb(20, 18, 14)", metalness: 1, roughness: 0.34, clearcoat: 0.5, clearcoatRoughness: 0.2 },
 };
 
 const LIGHT: Finish = {
@@ -261,7 +261,7 @@ const parse = (value: string, fallback: string) => {
 export const readShapeTone = (): ShapeTone => {
   const root = document.documentElement;
   const style = getComputedStyle(document.querySelector("[data-model-stage]") ?? root);
-  const accent = parse(style.getPropertyValue("--accent").trim(), RED);
+  const accent = parse(style.getPropertyValue("--accent").trim(), GOLD);
   const flag = style.getPropertyValue("--model-tone").trim();
   const light = flag ? flag === "light" : root.style.colorScheme === "light";
   const face = light ? new THREE.Color("rgb(214, 212, 218)").lerp(accent, 0.14) : new THREE.Color("rgb(11, 11, 13)").lerp(accent, 0.16);

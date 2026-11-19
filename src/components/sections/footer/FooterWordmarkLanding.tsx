@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import AuftrivioLogo from "@/components/AuftrivioLogo";
 
 const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
@@ -18,7 +19,6 @@ type FooterWordmarkLandingProps = {
 
 export default function FooterWordmarkLanding({
   brand = "Ostra",
-  mark,
   links = [
     { text: "Privacy policy", href: "#" },
     { text: "Terms of use", href: "#" },
@@ -56,17 +56,8 @@ export default function FooterWordmarkLanding({
   return (
     <footer aria-label={ariaLabel ?? "Footer"} className={cn("relative pb-[var(--gutter)] pt-[clamp(2.5rem,1.8rem+2.8vw,3rem)] text-foreground", className)}>
       <div className="kit-glass mx-auto flex w-[var(--container)] flex-col px-[1.375rem] pt-[1.375rem] lg:px-[clamp(2rem,3.5vw,3.5rem)] lg:pt-[clamp(2rem,3.5vw,3.5rem)]">
-        <div ref={rowRef} className="flex text-[length:var(--text-display)]">
-          <div ref={wordRef} aria-label={brand} role="img" className="flex w-max shrink-0 items-start">
-            <p aria-hidden="true" className="whitespace-nowrap font-medium leading-[0.9] tracking-[-0.065em]">
-              {brand}
-            </p>
-            {mark && (
-              <p aria-hidden="true" className="ml-[0.04em] mt-[0.02em] flex size-[0.15em] items-center justify-center rounded-full border-[0.018em] border-accent text-[length:0.1em] font-medium leading-none text-accent">
-                {mark}
-              </p>
-            )}
-          </div>
+        <div className="flex py-2">
+          <AuftrivioLogo size="lg" />
         </div>
 
         {links.length > 0 && (

@@ -111,17 +111,21 @@ const HeroShapeSplit = ({
               aria-label={title}
               className="mt-[1.75rem] text-balance text-[length:calc(var(--text-h1)*0.85)] leading-[1] tracking-[-0.05em] [overflow-wrap:anywhere] lg:mt-[2.5rem]"
             >
-              {words.map((word, i) => (
-                <div key={i} aria-hidden="true" className="mr-[0.24em] inline-block overflow-hidden align-top pt-[0.08em] -mt-[0.08em] pb-[0.15em] -mb-[0.15em] last:mr-0">
-                  <motion.div
-                    initial={reduce ? false : { y: "110%" }}
-                    animate={go ? { y: "0%" } : undefined}
-                    transition={{ duration: slow, ease, delay: 0.3 + i * 0.04 }}
-                  >
-                    {word}
-                  </motion.div>
-                </div>
-              ))}
+              {words.map((word, i) => {
+                const isGold = word.toLowerCase() === "mehr" || word.toLowerCase() === "als";
+                return (
+                  <div key={i} aria-hidden="true" className="mr-[0.24em] inline-block overflow-hidden align-top pt-[0.08em] -mt-[0.08em] pb-[0.15em] -mb-[0.15em] last:mr-0">
+                    <motion.div
+                      initial={reduce ? false : { y: "110%" }}
+                      animate={go ? { y: "0%" } : undefined}
+                      transition={{ duration: slow, ease, delay: 0.3 + i * 0.04 }}
+                      className={isGold ? "text-accent font-semibold drop-shadow-[0_0_16px_rgba(212,175,55,0.45)]" : undefined}
+                    >
+                      {word}
+                    </motion.div>
+                  </div>
+                );
+              })}
             </h1>
 
             {description && (
@@ -136,8 +140,21 @@ const HeroShapeSplit = ({
             )}
 
             {(primaryButton || secondaryButton) && (
-              <div className="mt-[1.5rem] flex w-full flex-col lg:mt-[2.25rem] lg:flex-row lg:flex-wrap lg:gap-x-[1.5rem] lg:gap-y-[1rem]">
-                {primaryButton && <RollLink {...primaryButton} show={go} delay={0.2} />}
+              <div className="mt-[1.75rem] flex w-full flex-col gap-4 sm:flex-row sm:items-center lg:mt-[2.5rem]">
+                {primaryButton && (
+                  <motion.a
+                    href={primaryButton.href}
+                    initial={reduce ? false : { opacity: 0, y: 16 }}
+                    animate={go ? { opacity: 1, y: 0 } : undefined}
+                    transition={{ duration: slow, ease, delay: 0.2 }}
+                    className="group relative inline-flex items-center justify-center gap-3 rounded-full bg-accent px-8 py-4 font-body text-xs font-bold uppercase tracking-[0.12em] text-accent-foreground shadow-[0_0_25px_rgba(212,175,55,0.35)] transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_35px_rgba(212,175,55,0.55)] active:scale-[0.98]"
+                  >
+                    <span>{primaryButton.text}</span>
+                    <svg aria-hidden="true" viewBox="0 0 12 12" fill="none" className="size-3 shrink-0 transition-transform duration-300 group-hover:translate-x-1">
+                      <path d="M2.5 9.5l7-7M3.5 2.5h6v6" stroke="currentColor" strokeWidth="1.5" />
+                    </svg>
+                  </motion.a>
+                )}
                 {secondaryButton && <RollLink {...secondaryButton} show={go} delay={0.26} />}
               </div>
             )}

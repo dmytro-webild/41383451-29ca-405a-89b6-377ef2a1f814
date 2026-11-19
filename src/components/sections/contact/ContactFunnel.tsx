@@ -76,7 +76,10 @@ const BUDGET_OPTIONS: OptionItem[] = [
 export default function ContactFunnel({ className }: { className?: string }) {
   const reduce = !!useReducedMotion();
   const consentCheckboxId = useId();
-  const endpoint = (import.meta.env.NEXT_PUBLIC_CONTACT_ENDPOINT as string | undefined)?.trim();
+  const endpoint =
+    (import.meta.env.NEXT_PUBLIC_CONTACT_ENDPOINT as string | undefined)?.trim() ||
+    (import.meta.env.VITE_CONTACT_ENDPOINT as string | undefined)?.trim() ||
+    "https://auftrivio-website.netlify.app/api/public/contact";
 
   const [step, setStep] = useState(1);
   const [startedAt, setStartedAt] = useState<number>(() => Date.now());
@@ -193,13 +196,6 @@ export default function ContactFunnel({ className }: { className?: string }) {
       return;
     }
 
-    // When endpoint is NOT configured, handle preview test mode
-    if (!endpoint) {
-      setIsLiveSuccess(false);
-      setIsSubmitted(true);
-      return;
-    }
-
     // Honeypot check: if bot filled honeypot, handle gracefully
     if (contactData.website) {
       setIsLiveSuccess(true);
@@ -258,18 +254,32 @@ export default function ContactFunnel({ className }: { className?: string }) {
         body: JSON.stringify(payload),
       });
 
-      const data = await res.json().catch(() => null);
+      let data: { ok?: boolean; message?: string; error?: string } | null = null;
+      try {
+        data = await res.json();
+      } catch {
+        data = null;
+      }
 
       if (res.status === 201 && data?.ok === true) {
         setIsLiveSuccess(true);
         setIsSubmitted(true);
       } else {
-        const errorDetail = data?.message || data?.error || `Status HTTP ${res.status}`;
-        setSubmitError(`Übermittlung fehlgeschlagen (${errorDetail}). Bitte prüfe deine Angaben und versuche es erneut.`);
+        let detail = "";
+        if (res.status === 403) {
+          detail = "Zugriff verweigert (HTTP 403)";
+        } else if (res.status === 404) {
+          detail = "Endpunkt nicht gefunden (HTTP 404)";
+        } else if (res.status !== 201) {
+          detail = `HTTP-Fehler ${res.status}`;
+        } else if (!data?.ok) {
+          detail = data?.message || data?.error || "Ungültiges Antwortformat vom Server";
+        }
+        setSubmitError(`Übermittlung fehlgeschlagen (${detail}). Deine Eingabedaten wurden beibehalten. Bitte versuche es erneut.`);
       }
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : "Verbindungsfehler";
-      setSubmitError(`Fehler bei der Datenübertragung (${msg}). Deine eingegebenen Daten sind weiterhin vorhanden.`);
+      const msg = err instanceof Error ? err.message : "Keine Netzwerkverbindung";
+      setSubmitError(`Netzwerkfehler (${msg}). Deine Eingabedaten wurden beibehalten. Bitte versuche es erneut.`);
     } finally {
       setIsSubmitting(false);
     }
@@ -638,13 +648,6 @@ export default function ContactFunnel({ className }: { className?: string }) {
                           Name und E-Mail sind Pflichtfelder. Wir behandeln deine Daten streng vertraulich.
                         </p>
                       </div>
-
-                      {!endpoint && (
-                        <div className="p-3 border border-accent/40 bg-accent/10 text-accent font-mono text-[length:var(--text-small)] flex items-center gap-2">
-                          <span className="inline-block size-2 rounded-full bg-accent animate-pulse" />
-                          <span>Vorschau · Es wird keine Anfrage gesendet</span>
-                        </div>
-                      )}
 
                       {/* Honeypot field (hidden) */}
                       <div className="hidden" aria-hidden="true">

@@ -64,15 +64,20 @@ export default function ImpressumModal({ isOpen, onClose }: ImpressumModalProps)
               <section>
                 <h3 className="text-[length:var(--text-body-lg)] font-semibold text-foreground mb-2">Angaben gemäß § 5 TMG</h3>
                 <p>
-                  <strong className="text-foreground">AUFTRIVIO</strong><br />
-                  Florin Alexandru Ungureanu, Geschäftsführer<br />
-                  Regensburg, Deutschland
+                  <strong className="text-foreground">AUFTRIVIO – Digital Growth &amp; Technology Agency</strong><br />
+                  Einzelunternehmen<br />
+                  Inhaber: Florin Alexandru Ungureanu<br />
+                  Von-Reiner-Str. 26a, 93053 Regensburg, Deutschland
                 </p>
               </section>
 
               <section>
                 <h3 className="text-[length:var(--text-body-lg)] font-semibold text-foreground mb-2">Kontakt</h3>
                 <p>
+                  Telefon:{" "}
+                  <a href="tel:+4917643980069" className="text-accent underline hover:text-foreground font-medium">
+                    +49 176 43980069
+                  </a><br />
                   E-Mail:{" "}
                   <a href="mailto:kontakt@auftrivio.de" className="text-accent underline hover:text-foreground font-medium">
                     kontakt@auftrivio.de
@@ -83,14 +88,14 @@ export default function ImpressumModal({ isOpen, onClose }: ImpressumModalProps)
 
               <section>
                 <h3 className="text-[length:var(--text-body-lg)] font-semibold text-foreground mb-2">Vertreten durch</h3>
-                <p>Florin Alexandru Ungureanu (Geschäftsführer)</p>
+                <p>Florin Alexandru Ungureanu (Inhaber)</p>
               </section>
 
               <section>
-                <h3 className="text-[length:var(--text-body-lg)] font-semibold text-foreground mb-2">Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h3>
+                <h3 className="text-[length:var(--text-body-lg)] font-semibold text-foreground mb-2">Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h3>
                 <p>
                   Florin Alexandru Ungureanu<br />
-                  AUFTRIVIO, Regensburg, Deutschland
+                  Von-Reiner-Str. 26a, 93053 Regensburg, Deutschland
                 </p>
               </section>
 

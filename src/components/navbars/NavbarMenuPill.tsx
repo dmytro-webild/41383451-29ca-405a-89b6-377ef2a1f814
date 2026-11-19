@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { AnimatePresence, animate, motion, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll } from "motion/react";
 import useMenuDialog from "@/components/kit/useMenuDialog";
+import AuftrivioLogo from "@/components/AuftrivioLogo";
 
 type NavItem = { name: string; href: string };
 
@@ -20,8 +21,6 @@ const EXPO_OUT = [0.19, 1, 0.22, 1] as const;
 
 const NavbarMenuPill = ({
   brand = "Ostra",
-  logoSrc,
-  mark,
   navItems = [
     { name: "Studio", href: "#about" },
     { name: "Work", href: "#gallery" },
@@ -56,21 +55,8 @@ const NavbarMenuPill = ({
         style={{ y: open ? "0%" : y }}
         className={`fixed inset-x-0 top-0 flex items-center justify-between py-[1.25rem] pl-[0.75rem] pr-[1.25rem] text-foreground lg:pl-[1.5rem] ${open ? "z-[56]" : "z-50"}`}
       >
-        <a href="#" className="flex min-w-0 items-center gap-[0.375rem]">
-          {logoSrc ? (
-            <img src={logoSrc} alt="" loading="eager" decoding="async" className="size-[1.125rem] object-contain" />
-          ) : (
-            <svg aria-hidden="true" viewBox="0 0 18 18" className="size-[1.125rem] shrink-0 fill-current">
-              <path d="M0 9a9 9 0 0 1 9-9v5.5A3.5 3.5 0 0 0 5.5 9Z" />
-              <path d="M9 0a9 9 0 0 1 9 9h-5.5A3.5 3.5 0 0 0 9 5.5Z" opacity="0.55" />
-              <path d="M18 9a9 9 0 0 1-9 9v-5.5A3.5 3.5 0 0 0 12.5 9Z" />
-              <path d="M9 18a9 9 0 0 1-9-9h5.5A3.5 3.5 0 0 0 9 12.5Z" opacity="0.55" />
-            </svg>
-          )}
-          <div className="flex items-start">
-            <p className="truncate text-[length:var(--text-body)] leading-[1.5] tracking-[-0.025em]">{brand}</p>
-            {mark && <p className="text-[length:var(--text-label)] leading-none text-accent">{mark}</p>}
-          </div>
+        <a href="#" className="flex min-w-0 items-center">
+          <AuftrivioLogo size="sm" />
         </a>
 
         <button

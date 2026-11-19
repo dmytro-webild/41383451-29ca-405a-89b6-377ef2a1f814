@@ -108,7 +108,7 @@ const WATCH_LOOK: Record<string, WatchFinish> = {
 };
 const WATCH_GRADE = "gl_FragColor.rgb = pow(clamp((gl_FragColor.rgb - 0.5) * 1.15 + 0.5, 0.0, 1.0), vec3(1.0 / 1.6));";
 const WATCH_GOLD = new THREE.Color("#fde9be");
-const WATCH_BLUE = new THREE.Color("#7aa0cc");
+const WATCH_BLUE = new THREE.Color("#d4af37");
 
 const ease = (t: number) => t * t * t * (t * (t * 6 - 15) + 10);
 const clamp01 = (v: number) => Math.min(1, Math.max(0, v));

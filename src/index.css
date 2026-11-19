@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
 @import "./styles/animations.css";
 @import "./styles/masks.css";
@@ -10,11 +9,11 @@
 
 /* webild:theme-ai */
 :root {
-  --primary-cta: #fefefe;
+  --primary-cta: #d4af37;
   --primary-cta-text: #000000;
   --secondary-cta: #141414;
   --secondary-cta-text: #fefefe;
-  --background-accent: #3d6bff;
+  --background-accent: #d4af37;
 
   --background: #000000;
   --foreground: #fefefe;
@@ -28,7 +27,7 @@
   --secondary-foreground: var(--secondary-cta-text);
   --muted: #141414;
   --muted-foreground: #9a9a9a;
-  --accent: var(--background-accent);
+  --accent: #d4af37;
   --accent-foreground: #000000;
   --deep: #000000;
   --deep-foreground: #fefefe;
@@ -37,19 +36,19 @@
   --border: #1e1e1e;
   --input: #333333;
   --ring: var(--primary-cta);
-  --tint-1: #1f3680;
-  --tint-2: #152559;
-  --tint-3: #0c1533;
+  --tint-1: #4a3b10;
+  --tint-2: #2e240a;
+  --tint-3: #171205;
   --glow: var(--accent);
   --glass: var(--background);
   --accent-glass: color-mix(in srgb, var(--accent) 70%, transparent);
   --model-tone: dark;
 
-  --font-heading: "Syne", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-body: "Plus Jakarta Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-label: "IBM Plex Mono", ui-monospace, Menlo, monospace;
-  --heading-weight: 400;
-  --heading-tracking: -0.045em;
+  --font-heading: "Sora", sans-serif;
+  --font-body: "Manrope", sans-serif;
+  --font-label: "Manrope", sans-serif;
+  --heading-weight: 600;
+  --heading-tracking: -0.035em;
   --heading-leading: 1;
   --text-display: clamp(3.625rem, 1.9071rem + 7.048vw, 8.25rem);
   --text-h1: clamp(2.9375rem, 1.8rem + 4.667vw, 6rem);
@@ -130,14 +129,14 @@
     margin: 0;
     background-color: var(--background);
     color: var(--foreground);
-    font-family: "Plus Jakarta Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Manrope", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 400;
     letter-spacing: -0.01em;
     min-height: 100vh;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: "Syne", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Sora", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: var(--heading-weight);
     letter-spacing: var(--heading-tracking);
     line-height: var(--heading-leading);

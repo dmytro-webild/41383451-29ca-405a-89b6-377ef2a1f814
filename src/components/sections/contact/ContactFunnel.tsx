@@ -210,16 +210,26 @@ export default function ContactFunnel({ className }: { className?: string }) {
 
         {/* Section Title */}
         <div className="flex flex-col gap-2">
-          <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="flex flex-wrap items-center justify-between gap-3">
             <span className="font-mono text-[length:var(--text-label)] uppercase tracking-[var(--label-tracking)] text-accent">
               Projektanfrage
             </span>
-            <a
-              href="mailto:kontakt@auftrivio.de"
-              className="font-mono text-[length:var(--text-small)] text-accent underline underline-offset-4 hover:text-foreground transition-colors font-medium"
-            >
-              kontakt@auftrivio.de
-            </a>
+            <div className="flex flex-wrap items-center gap-4">
+              <a
+                href="https://auftrivio-website.netlify.app/kontakt"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono text-[length:var(--text-small)] text-muted-foreground hover:text-accent underline underline-offset-4 transition-colors font-medium"
+              >
+                Projektanfrage über unser bestehendes Formular
+              </a>
+              <a
+                href="mailto:kontakt@auftrivio.de"
+                className="font-mono text-[length:var(--text-small)] text-accent underline underline-offset-4 hover:text-foreground transition-colors font-medium"
+              >
+                kontakt@auftrivio.de
+              </a>
+            </div>
           </div>
           <h2 className="text-[length:var(--text-h2)] font-heading">
             Starte dein digitales Projekt
@@ -695,6 +705,21 @@ export default function ContactFunnel({ className }: { className?: string }) {
                   <span className="text-muted-foreground font-mono">E-Mail:</span>
                   <span className="text-foreground font-semibold">{contactData.email}</span>
                 </div>
+              </div>
+
+              {/* Note and link for real inquiries */}
+              <div className="w-full text-center bg-accent/10 border border-accent/30 p-4 rounded-none">
+                <p className="text-[length:var(--text-small)] text-muted-foreground font-body">
+                  Für eine verbindliche Anfrage nutze bitte die{" "}
+                  <a
+                    href="https://auftrivio-website.netlify.app/kontakt"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-accent underline underline-offset-4 hover:text-foreground transition-colors font-semibold"
+                  >
+                    Projektanfrage über unser bestehendes Formular
+                  </a>.
+                </p>
               </div>
 
               <div className="pt-4">

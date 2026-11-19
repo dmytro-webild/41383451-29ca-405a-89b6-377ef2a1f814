@@ -17,7 +17,7 @@ export default function Layout() {
         setIsPrivacyOpen(true);
         return;
       }
-      const impressumTarget = (e.target as HTMLElement)?.closest('a[href="#impressum"], a[href*="impressum"]');
+      const impressumTarget = (e.target as HTMLElement)?.closest('a[href="#impressum"]');
       if (impressumTarget) {
         e.preventDefault();
         setIsImpressumOpen(true);
@@ -39,28 +39,28 @@ export default function Layout() {
           navItems={[
             {
               name: "Leistungen",
-              href: "#services"
+              href: "/#services"
             },
             {
               name: "Prozess",
-              href: "#process"
+              href: "/#process"
             },
             {
               name: "Projekte",
-              href: "#gallery"
+              href: "/#gallery"
             },
             {
               name: "Über uns",
-              href: "#about"
+              href: "/#about"
             },
             {
               name: "Kontakt",
-              href: "#contact"
+              href: "/#contact"
             }
           ]}
           contact={{
             text: "Digitales Projekt starten",
-            href: "#contact"
+            href: "/#contact"
           }}
         />
       </header>
@@ -73,23 +73,23 @@ export default function Layout() {
           links={[
             {
               text: "Leistungen",
-              href: "#services"
+              href: "/#services"
             },
             {
               text: "Ablauf",
-              href: "#process"
+              href: "/#process"
             },
             {
               text: "Über AUFTRIVIO",
-              href: "#about"
+              href: "/#about"
             },
             {
               text: "Kundenstimmen",
-              href: "#testimonial"
+              href: "/#testimonial"
             },
             {
               text: "Impressum",
-              href: "#impressum"
+              href: "/impressum"
             },
             {
               text: "Datenschutz",

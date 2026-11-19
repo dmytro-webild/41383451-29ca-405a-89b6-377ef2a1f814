@@ -64,7 +64,12 @@ export default function FooterWordmarkLanding({
           <ul className="mt-[clamp(1.75rem,1.5rem+1vw,2.25rem)] flex flex-wrap gap-x-[clamp(1.25rem,2.2vw,2rem)] gap-y-[8px]">
             {links.map((link, index) => (
               <li key={index}>
-                <a href={link.href} className="btn-link w-[clamp(10rem,15vw,12.5rem)] justify-between border-b border-border pb-[12px] pt-[12px]">
+                <a
+                  href={link.href}
+                  target={link.href.startsWith("http") ? "_blank" : undefined}
+                  rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  className="btn-link w-[clamp(10rem,15vw,12.5rem)] justify-between border-b border-border pb-[12px] pt-[12px]"
+                >
                   <p className="whitespace-nowrap">{link.text}</p>
                   <svg viewBox="0 0 20 20" aria-hidden="true" className="size-[16px] shrink-0" fill="none" stroke="currentColor" strokeWidth="1.5">
                     <path d="M5 15L15 5M7 5h8v8" />

@@ -3,7 +3,6 @@ import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Check, ArrowLeft, ArrowRight, Sparkles, ShieldCheck, RefreshCw } from "lucide-react";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import DatenschutzModal from "@/components/sections/privacy/DatenschutzModal";
 
 const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 
@@ -78,7 +77,6 @@ export default function ContactFunnel({ className }: { className?: string }) {
   const reduce = !!useReducedMotion();
   const consentCheckboxId = useId();
   const [step, setStep] = useState(1);
-  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
 
   // Form State
   const [selectedVorhaben, setSelectedVorhaben] = useState<string[]>(["webdesign"]);
@@ -208,8 +206,6 @@ export default function ContactFunnel({ className }: { className?: string }) {
 
   return (
     <section aria-label="Projektanfrage Funnel" className={cn("relative py-[var(--section-space)] text-foreground", className)}>
-      <DatenschutzModal isOpen={isPrivacyOpen} onClose={() => setIsPrivacyOpen(false)} />
-
       <div className="kit-glass mx-auto flex w-[var(--container)] flex-col gap-6 p-[1.375rem] lg:p-[clamp(2rem,3.5vw,3.5rem)]">
 
         {/* Section Title */}
@@ -587,16 +583,14 @@ export default function ContactFunnel({ className }: { className?: string }) {
                           />
                           <span className="text-[length:var(--text-small)] text-muted-foreground leading-snug">
                             Ich stimme der Verarbeitung meiner Daten gemäß der{" "}
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                setIsPrivacyOpen(true);
-                              }}
+                            <a
+                              href="https://auftrivio.de/datenschutz"
+                              target="_blank"
+                              rel="noopener noreferrer"
                               className="text-accent underline underline-offset-2 hover:text-foreground"
                             >
                               Datenschutzerklärung
-                            </button>{" "}
+                            </a>{" "}
                             zu.
                           </span>
                         </label>

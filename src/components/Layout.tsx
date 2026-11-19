@@ -78,8 +78,12 @@ export default function Layout() {
               href: "#testimonial"
             },
             {
+              text: "Impressum",
+              href: "https://auftrivio.de/impressum"
+            },
+            {
               text: "Datenschutz",
-              href: "#datenschutz"
+              href: "https://auftrivio.de/datenschutz"
             }
           ]}
           tagline="High-End Digitalagentur in Regensburg für Webdesign, SEO & KI-Automatisierung."

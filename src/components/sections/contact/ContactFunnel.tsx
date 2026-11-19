@@ -1,6 +1,6 @@
 import { useState, useId } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
-import { Check, ArrowLeft, ArrowRight, Sparkles, ShieldCheck, RefreshCw } from "lucide-react";
+import { Check, ArrowLeft, ArrowRight, Sparkles, ShieldCheck, RefreshCw, Loader2, AlertCircle } from "lucide-react";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -76,7 +76,10 @@ const BUDGET_OPTIONS: OptionItem[] = [
 export default function ContactFunnel({ className }: { className?: string }) {
   const reduce = !!useReducedMotion();
   const consentCheckboxId = useId();
+  const endpoint = (import.meta.env.NEXT_PUBLIC_CONTACT_ENDPOINT as string | undefined)?.trim();
+
   const [step, setStep] = useState(1);
+  const [startedAt, setStartedAt] = useState<number>(() => Date.now());
 
   // Form State
   const [selectedVorhaben, setSelectedVorhaben] = useState<string[]>(["webdesign"]);
@@ -90,11 +93,15 @@ export default function ContactFunnel({ className }: { className?: string }) {
     company: "",
     phone: "",
     message: "",
+    website: "",
     consent: false,
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLiveSuccess, setIsLiveSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   // Get dynamic goals based on selected Vorhaben
   const getDynamicGoalOptions = (): OptionItem[] => {
@@ -123,6 +130,7 @@ export default function ContactFunnel({ className }: { className?: string }) {
   // Handlers for step 1 (Vorhaben - Multi select)
   const toggleVorhaben = (id: string) => {
     setValidationError(null);
+    setSubmitError(null);
     if (selectedVorhaben.includes(id)) {
       if (selectedVorhaben.length > 1) {
         setSelectedVorhaben(selectedVorhaben.filter((item) => item !== id));
@@ -135,6 +143,7 @@ export default function ContactFunnel({ className }: { className?: string }) {
   // Handlers for step 2 (Ziel - Multi select)
   const toggleZiel = (id: string) => {
     setValidationError(null);
+    setSubmitError(null);
     if (selectedZiele.includes(id)) {
       setSelectedZiele(selectedZiele.filter((item) => item !== id));
     } else {
@@ -145,12 +154,12 @@ export default function ContactFunnel({ className }: { className?: string }) {
   // Navigation handlers
   const handleNext = () => {
     setValidationError(null);
+    setSubmitError(null);
     if (step === 1 && selectedVorhaben.length === 0) {
       setValidationError("Bitte wähle mindestens ein Vorhaben aus.");
       return;
     }
     if (step === 2 && selectedZiele.length === 0 && dynamicGoalOptions.length > 0) {
-      // Auto-select first if none selected
       setSelectedZiele([dynamicGoalOptions[0].id]);
     }
     if (step < 5) {
@@ -160,14 +169,16 @@ export default function ContactFunnel({ className }: { className?: string }) {
 
   const handleBack = () => {
     setValidationError(null);
+    setSubmitError(null);
     if (step > 1) {
       setStep((s) => s - 1);
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setValidationError(null);
+    setSubmitError(null);
 
     if (!contactData.name.trim()) {
       setValidationError("Bitte gib deinen Namen ein.");
@@ -182,13 +193,94 @@ export default function ContactFunnel({ className }: { className?: string }) {
       return;
     }
 
-    // Submit complete (preview mode - no backend email dispatch)
-    setIsSubmitted(true);
+    // When endpoint is NOT configured, handle preview test mode
+    if (!endpoint) {
+      setIsLiveSuccess(false);
+      setIsSubmitted(true);
+      return;
+    }
+
+    // Honeypot check: if bot filled honeypot, handle gracefully
+    if (contactData.website) {
+      setIsLiveSuccess(true);
+      setIsSubmitted(true);
+      return;
+    }
+
+    if (isSubmitting) return; // Only 1 in-flight request
+
+    setIsSubmitting(true);
+
+    const selectedVorhabenTitles = VORHABEN_OPTIONS
+      .filter((o) => selectedVorhaben.includes(o.id))
+      .map((o) => o.title)
+      .join(", ");
+    const service = selectedVorhabenTitles.slice(0, 80);
+
+    const selectedGoalsTitles = dynamicGoalOptions
+      .filter((o) => selectedZiele.includes(o.id))
+      .map((o) => o.title)
+      .join(", ");
+    const startTitle = START_OPTIONS.find((o) => o.id === selectedStart)?.title || selectedStart;
+    const budgetTitle = BUDGET_OPTIONS.find((o) => o.id === selectedBudget)?.title || selectedBudget;
+
+    const messageParts = [
+      `Vorhaben: ${selectedVorhabenTitles || "Keine"}`,
+      `Ziel: ${selectedGoalsTitles || "Keine"}`,
+      `Start: ${startTitle}`,
+      `Budget: ${budgetTitle}`,
+    ];
+
+    if (contactData.message.trim()) {
+      messageParts.push(`Beschreibung: ${contactData.message.trim()}`);
+    }
+
+    const fullMessage = messageParts.join("\n").slice(0, 3000);
+
+    const payload = {
+      name: contactData.name.trim(),
+      company: contactData.company.trim(),
+      email: contactData.email.trim(),
+      phone: contactData.phone.trim(),
+      service,
+      message: fullMessage,
+      website: contactData.website,
+      startedAt,
+    };
+
+    try {
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "omit",
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json().catch(() => null);
+
+      if (res.status === 201 && data?.ok === true) {
+        setIsLiveSuccess(true);
+        setIsSubmitted(true);
+      } else {
+        const errorDetail = data?.message || data?.error || `Status HTTP ${res.status}`;
+        setSubmitError(`Übermittlung fehlgeschlagen (${errorDetail}). Bitte prüfe deine Angaben und versuche es erneut.`);
+      }
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Verbindungsfehler";
+      setSubmitError(`Fehler bei der Datenübertragung (${msg}). Deine eingegebenen Daten sind weiterhin vorhanden.`);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleReset = () => {
     setStep(1);
+    setStartedAt(Date.now());
     setIsSubmitted(false);
+    setIsLiveSuccess(false);
+    setIsSubmitting(false);
     setSelectedVorhaben(["webdesign"]);
     setSelectedZiele([]);
     setSelectedStart("sofort");
@@ -199,9 +291,11 @@ export default function ContactFunnel({ className }: { className?: string }) {
       company: "",
       phone: "",
       message: "",
+      website: "",
       consent: false,
     });
     setValidationError(null);
+    setSubmitError(null);
   };
 
   return (
@@ -276,8 +370,27 @@ export default function ContactFunnel({ className }: { className?: string }) {
 
               {/* Validation Error Notice */}
               {validationError && (
-                <div className="mb-6 p-4 border border-destructive/50 bg-destructive/10 text-destructive-foreground text-[length:var(--text-small)] font-body">
-                  {validationError}
+                <div className="mb-6 p-4 border border-destructive/50 bg-destructive/10 text-destructive-foreground text-[length:var(--text-small)] font-body flex items-start gap-2">
+                  <AlertCircle className="size-4 shrink-0 mt-0.5 text-destructive" />
+                  <span>{validationError}</span>
+                </div>
+              )}
+
+              {/* Submit / Server Error Notice with received inputs */}
+              {submitError && (
+                <div className="mb-6 p-5 border border-destructive/60 bg-destructive/15 text-foreground text-[length:var(--text-small)] font-body space-y-3">
+                  <div className="flex items-start gap-2 text-destructive font-semibold">
+                    <AlertCircle className="size-5 shrink-0 mt-0.5" />
+                    <span>{submitError}</span>
+                  </div>
+                  <div className="pt-2 border-t border-destructive/30 text-muted-foreground font-mono text-xs space-y-1">
+                    <p className="font-semibold text-foreground">Erhaltene Eingaben:</p>
+                    <p>Name: {contactData.name || "–"}</p>
+                    <p>E-Mail: {contactData.email || "–"}</p>
+                    {contactData.company && <p>Firma: {contactData.company}</p>}
+                    {contactData.phone && <p>Telefon: {contactData.phone}</p>}
+                    <p>Vorhaben: {selectedVorhaben.map((id) => VORHABEN_OPTIONS.find((o) => o.id === id)?.title).filter(Boolean).join(", ")}</p>
+                  </div>
                 </div>
               )}
 
@@ -526,6 +639,26 @@ export default function ContactFunnel({ className }: { className?: string }) {
                         </p>
                       </div>
 
+                      {!endpoint && (
+                        <div className="p-3 border border-accent/40 bg-accent/10 text-accent font-mono text-[length:var(--text-small)] flex items-center gap-2">
+                          <span className="inline-block size-2 rounded-full bg-accent animate-pulse" />
+                          <span>Vorschau · Es wird keine Anfrage gesendet</span>
+                        </div>
+                      )}
+
+                      {/* Honeypot field (hidden) */}
+                      <div className="hidden" aria-hidden="true">
+                        <label htmlFor="website-hp">Website</label>
+                        <input
+                          id="website-hp"
+                          type="text"
+                          tabIndex={-1}
+                          autoComplete="off"
+                          value={contactData.website}
+                          onChange={(e) => setContactData({ ...contactData, website: e.target.value })}
+                        />
+                      </div>
+
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <label className="flex flex-col gap-2">
                           <span className="font-mono text-[length:var(--text-label)] uppercase tracking-[var(--label-tracking)]">
@@ -626,8 +759,9 @@ export default function ContactFunnel({ className }: { className?: string }) {
                   {step > 1 ? (
                     <button
                       type="button"
+                      disabled={isSubmitting}
                       onClick={handleBack}
-                      className="btn-secondary flex items-center gap-2"
+                      className="btn-secondary flex items-center gap-2 disabled:opacity-50"
                     >
                       <ArrowLeft className="size-4" />
                       <span className="btn-label">Zurück</span>
@@ -648,17 +782,27 @@ export default function ContactFunnel({ className }: { className?: string }) {
                   ) : (
                     <button
                       type="submit"
-                      className="btn-primary flex items-center gap-2 ml-auto"
+                      disabled={isSubmitting}
+                      className="btn-primary flex items-center gap-2 ml-auto disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      <Sparkles className="size-4" />
-                      <span className="btn-label">Kostenlose Analyse anfragen</span>
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="size-4 animate-spin" />
+                          <span className="btn-label">Übermittlung...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="size-4" />
+                          <span className="btn-label">Kostenlose Analyse anfragen</span>
+                        </>
+                      )}
                     </button>
                   )}
                 </div>
               </form>
             </>
           ) : (
-            /* Confirmation Screen (Preview Testbestätigung without real email sending) */
+            /* Confirmation Screen */
             <motion.div
               initial={reduce ? false : { opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -671,7 +815,7 @@ export default function ContactFunnel({ className }: { className?: string }) {
 
               <div>
                 <span className="font-mono text-[length:var(--text-label)] uppercase text-accent tracking-[var(--label-tracking)]">
-                  Vorschau-Bestätigung (Test-Modus)
+                  {isLiveSuccess ? "Anfrage eingegangen" : "Vorschau-Bestätigung (Test-Modus)"}
                 </span>
                 <h3 className="text-[length:var(--text-h2)] font-heading mt-2">
                   Anfrage erfolgreich übermittelt!

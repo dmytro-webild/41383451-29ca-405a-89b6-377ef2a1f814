@@ -56,8 +56,20 @@ export default function FooterWordmarkLanding({
   return (
     <footer aria-label={ariaLabel ?? "Footer"} className={cn("relative pb-[var(--gutter)] pt-[clamp(2.5rem,1.8rem+2.8vw,3rem)] text-foreground", className)}>
       <div className="kit-glass mx-auto flex w-[var(--container)] flex-col px-[1.375rem] pt-[1.375rem] lg:px-[clamp(2rem,3.5vw,3.5rem)] lg:pt-[clamp(2rem,3.5vw,3.5rem)]">
-        <div className="flex py-2">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-2 border-b border-border/40 pb-4">
           <AuftrivioLogo size="lg" />
+          <div className="flex flex-col sm:items-end gap-1 font-mono text-[length:var(--text-small)] text-muted-foreground">
+            <p>AUFTRIVIO · Florin Alexandru Ungureanu, Geschäftsführer</p>
+            <p>
+              Regensburg, Deutschland ·{" "}
+              <a
+                href="mailto:kontakt@auftrivio.de"
+                className="text-accent underline underline-offset-2 hover:text-foreground transition-colors font-semibold"
+              >
+                kontakt@auftrivio.de
+              </a>
+            </p>
+          </div>
         </div>
 
         {links.length > 0 && (

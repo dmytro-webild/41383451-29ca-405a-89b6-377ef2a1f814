@@ -3,16 +3,25 @@ import { Outlet } from "react-router-dom";
 import NavbarMenuPill from "@/components/navbars/NavbarMenuPill";
 import FooterWordmarkLanding from "@/components/sections/footer/FooterWordmarkLanding";
 import DatenschutzModal from "@/components/sections/privacy/DatenschutzModal";
+import ImpressumModal from "@/components/sections/privacy/ImpressumModal";
 
 export default function Layout() {
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
+  const [isImpressumOpen, setIsImpressumOpen] = useState(false);
 
   useEffect(() => {
     const handleGlobalClick = (e: MouseEvent) => {
-      const target = (e.target as HTMLElement)?.closest('a[href="#datenschutz"], a[href="#privacy"]');
-      if (target) {
+      const privacyTarget = (e.target as HTMLElement)?.closest('a[href="#datenschutz"], a[href="#privacy"], a[href*="datenschutz"]');
+      if (privacyTarget) {
         e.preventDefault();
         setIsPrivacyOpen(true);
+        return;
+      }
+      const impressumTarget = (e.target as HTMLElement)?.closest('a[href="#impressum"], a[href*="impressum"]');
+      if (impressumTarget) {
+        e.preventDefault();
+        setIsImpressumOpen(true);
+        return;
       }
     };
     document.addEventListener("click", handleGlobalClick);
@@ -22,6 +31,7 @@ export default function Layout() {
   return (
     <div className="relative isolate min-h-svh flex flex-col bg-background text-foreground" data-button="default" data-card="filled" data-pattern="none">
       <DatenschutzModal isOpen={isPrivacyOpen} onClose={() => setIsPrivacyOpen(false)} />
+      <ImpressumModal isOpen={isImpressumOpen} onClose={() => setIsImpressumOpen(false)} />
 
       <header data-webild-section="Header">
         <NavbarMenuPill
@@ -79,11 +89,11 @@ export default function Layout() {
             },
             {
               text: "Impressum",
-              href: "https://auftrivio.de/impressum"
+              href: "#impressum"
             },
             {
               text: "Datenschutz",
-              href: "https://auftrivio.de/datenschutz"
+              href: "#datenschutz"
             }
           ]}
           tagline="High-End Digitalagentur in Regensburg für Webdesign, SEO & KI-Automatisierung."
